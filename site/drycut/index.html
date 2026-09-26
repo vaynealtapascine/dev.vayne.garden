@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DryCut · dev.vayne.garden</title>
+  <meta name="description" content="DryCut: private, local background removal for Windows, macOS and Linux.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/favicon.svg" alt="">vayne.garden <span>/ dev</span></a>
+      <nav><a href="/#tools">All tools</a><a href="https://github.com/vaynealtapascine/DryCut">Source</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>DryCut</h1>
+      <p class="tagline">Private, local background removal for Windows, macOS and Linux. Your images never leave your computer.</p>
+      <div class="actions">
+        <a class="button" href="https://github.com/vaynealtapascine/DryCut/releases/download/v1.0.0/DryCut-Setup-1.0.0.exe">Download for Windows</a>
+        <a class="button quiet" href="#get">Other downloads</a>
+      </div>
+    </section>
+
+    <figure class="figure">
+      <img src="/shots/drycut.webp" width="1800" height="1612" alt="DryCut with still-life.png open: the original photo of a mug and a potted plant, and beside it the transparent result with the background removed.">
+      <figcaption>A mug and a plant, cut out with the included model on the Balanced edge setting.</figcaption>
+    </figure>
+
+    <h2>What it does</h2>
+    <ul class="features">
+      <li><strong>Fast by default</strong><span>An included, quantized IS-Net model handles everyday images offline.</span></li>
+      <li><strong>Stronger when needed</strong><span>Download the optional BiRefNet model in Settings for hair, fur and busy backgrounds.</span></li>
+      <li><strong>Edges your way</strong><span>None, Soft, Balanced or Detailed cleanup, and reprocess without reopening the image.</span></li>
+      <li><strong>Batches</strong><span>Queue several images, see the time remaining, and work through results in the gallery.</span></li>
+      <li><strong>Easy to reach</strong><span>Drag and drop, paste with Ctrl+V, or right-click an image in Explorer on Windows.</span></li>
+      <li><strong>Panel mode</strong><span>Shrink it to a narrow side panel and pin it on top beside another app.</span></li>
+    </ul>
+
+    <h2 id="get">Get it</h2>
+    <ul class="downloads">
+      <li><a href="https://github.com/vaynealtapascine/DryCut/releases/download/v1.0.0/DryCut-Setup-1.0.0.exe">Windows installer</a><span class="note">Per-user, no admin needed</span></li>
+      <li><a href="https://github.com/vaynealtapascine/DryCut/releases/download/v1.0.0/DryCut-portable-1.0.0.zip">Windows portable ZIP</a><span class="note">Extract fully, then run DryCut.Desktop.exe</span></li>
+      <li><a href="https://github.com/vaynealtapascine/DryCut/releases/download/v1.0.0/DryCut-portable-osx-arm64-1.0.0.zip">macOS, Apple silicon</a><span class="note">Portable ZIP</span></li>
+      <li><a href="https://github.com/vaynealtapascine/DryCut/releases/download/v1.0.0/DryCut-portable-osx-x64-1.0.0.zip">macOS, Intel</a><span class="note">Portable ZIP</span></li>
+      <li><a href="https://github.com/vaynealtapascine/DryCut/releases/download/v1.0.0/DryCut-portable-linux-x64-1.0.0.zip">Linux x64</a><span class="note">Portable ZIP</span></li>
+    </ul>
+    <div class="aside">
+      <p>Version 1.0.0. The builds aren't code-signed, so Windows SmartScreen may warn about an unrecognized app. GPU acceleration (DirectML) and Explorer integration are Windows-only; other platforms run on the CPU. The only network request DryCut makes is the optional download of the stronger model, and only when you ask for it. <a href="https://github.com/vaynealtapascine/DryCut/releases/tag/v1.0.0">Checksums and release notes</a>.</p>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>DryCut is MIT licensed. Its code is written with AI coding models; the <a href="https://github.com/vaynealtapascine/DryCut#readme">README</a> names them.</p>
+      <p><a href="/">dev.vayne.garden</a> · <a href="https://vayne.garden">vayne.garden</a></p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arbor · dev.vayne.garden</title>
+  <meta name="description" content="Arbor: a self-hosted outliner for tracking projects, with a phone app that works offline.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/favicon.svg" alt="">vayne.garden <span>/ dev</span></a>
+      <nav><a href="/#tools">All tools</a><a href="https://github.com/vaynealtapascine/Arbor">Source</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Arbor</h1>
+      <p class="tagline">A self-hosted outliner for tracking projects: nested items, your own statuses and tags, notes, saved views, templates, and a phone app that works offline.</p>
+      <div class="actions">
+        <a class="button" href="#run">Run it yourself</a>
+        <a class="button quiet" href="https://github.com/vaynealtapascine/Arbor">Source on GitHub</a>
+      </div>
+    </section>
+
+    <div class="pair figure">
+      <img src="/shots/arbor.webp" width="1800" height="1200" alt="Arbor on a desktop: a sidebar with saved views, statuses and tags, and a nested greenhouse project with statuses, tags, notes and progress rings.">
+      <img class="phone" src="/shots/arbor-phone.webp" width="840" height="1544" alt="The same outline on a phone, with the add box docked at the bottom.">
+    </div>
+
+    <h2>What it does</h2>
+    <ul class="features">
+      <li><strong>Entry with no friction</strong><span>Type and press Enter. <code>#tag</code>, <code>@status</code>, <code>::</code> for a note, <code>/template</code> for a whole sub-tree.</span></li>
+      <li><strong>Real outliner editing</strong><span>Tab to nest, drag to move, Ctrl+Enter to finish, and undo for every change.</span></li>
+      <li><strong>Statuses and tags you define</strong><span>Any name, colour and icon. Tags nest, so <code>#work/client-a</code> is found under <code>#work</code>.</span></li>
+      <li><strong>Search that understands you</strong><span><code>(@done OR @to-do) AND #writing</code>, phrases, exclusions, then keep it as a saved view.</span></li>
+      <li><strong>Notes</strong><span>Full markdown under any item, with tickable task lists and images.</span></li>
+      <li><strong>Works offline on your phone</strong><span>Install it as an app; changes queue and sync when you're back on your network.</span></li>
+    </ul>
+
+    <h2 id="run">Run it yourself</h2>
+    <p>Arbor is a small Node server with a SQLite file and no outside services. It needs Node 22.13 or newer.</p>
+    <pre><code>git clone https://github.com/vaynealtapascine/Arbor.git
+cd Arbor
+npm install
+npm run dev</code></pre>
+    <div class="aside">
+      <p>That opens a development copy at <code>localhost:5241</code> with a short tour to play with. The README's <a href="https://github.com/vaynealtapascine/Arbor#run-it-for-real">Run it for real</a> section covers installing it properly on your own machine and reaching it from your phone.</p>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>Arbor is MIT licensed. Its code is written with AI coding models; the <a href="https://github.com/vaynealtapascine/Arbor#readme">README</a> names them.</p>
+      <p><a href="/">dev.vayne.garden</a> · <a href="https://vayne.garden">vayne.garden</a></p>
+    </div>
+  </footer>
+</body>
+</html>

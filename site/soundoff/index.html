@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SoundOff · dev.vayne.garden</title>
+  <meta name="description" content="SoundOff: a local transcription editor for Windows. Transcribe on your computer with WhisperX and review word-synced text and speakers.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/favicon.svg" alt="">vayne.garden <span>/ dev</span></a>
+      <nav><a href="/#tools">All tools</a><a href="https://github.com/vaynealtapascine/SoundOff">Source</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>SoundOff</h1>
+      <p class="tagline">A local transcription editor for Windows. Import or record audio and video, transcribe it on your computer, and review word-synced text and speakers. No account, no upload, no hosted inference.</p>
+      <div class="actions">
+        <a class="button" href="https://github.com/vaynealtapascine/SoundOff/releases/tag/v0.1.0">Get the preview build</a>
+        <a class="button quiet" href="#get">What you need</a>
+      </div>
+    </section>
+
+    <figure class="figure">
+      <img src="/shots/soundoff.webp" width="1800" height="1278" alt="SoundOff in its light appearance: a conversation between June and Mika about planting tomatoes and mint, with timestamps in the margin and the recording's waveform below.">
+      <figcaption>A 42-second conversation read by two text-to-speech voices, transcribed on the CPU with the small WhisperX model. The two speakers were split and named afterwards, as you would in the Speakers panel.</figcaption>
+    </figure>
+
+    <h2>What it does</h2>
+    <ul class="features">
+      <li><strong>Import or record</strong><span>Bring in audio or video, or record a microphone, your computer's sound, or both at once.</span></li>
+      <li><strong>Transcribe on your computer</strong><span>WhisperX runs in a private Python runtime: voice detection, recognition, then word-level alignment.</span></li>
+      <li><strong>Review in sync</strong><span>Playback lights up the word being spoken; click any word to jump there. Video plays along.</span></li>
+      <li><strong>Correct everything</strong><span>Text, speakers, paragraphs and timing are yours to fix, and every save is a revision you can restore.</span></li>
+      <li><strong>Two views</strong><span>Read it as a document, or switch to a subtitle-style table of timed cues.</span></li>
+      <li><strong>Export</strong><span>Text with timecodes, SRT subtitles, the clipboard, or a portable project bundle.</span></li>
+    </ul>
+
+    <figure class="figure">
+      <img src="/shots/soundoff-dark.webp" width="1800" height="1278" alt="The same transcript in SoundOff's dark appearance." loading="lazy">
+      <figcaption>Dark is the default appearance.</figcaption>
+    </figure>
+
+    <h2 id="get">What you need</h2>
+    <div class="aside">
+      <p><strong>SoundOff is an early preview (0.1.0).</strong> Windows is the only platform that has actually been run. The macOS and Linux downloads are built from the same source and can import, edit and export, but they can't play or record.</p>
+      <p>You'll also need <code>ffmpeg</code> and <code>ffprobe</code> on your PATH, and a one-time private Python runtime for transcription, set up with <code>python scripts/setup_runtime.py</code>. Model packs download only when you ask. The <a href="https://github.com/vaynealtapascine/SoundOff#readme">README</a> walks through it.</p>
+    </div>
+    <ul class="downloads" style="margin-top: 1rem">
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v0.1.0/SoundOff-0.1.0-win-x64.zip">Windows x64</a><span class="note">ZIP</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/tag/v0.1.0">macOS and Linux</a><span class="note">Untested builds, no playback or recording</span></li>
+    </ul>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>SoundOff is MIT licensed. Its code is written with AI coding models; the <a href="https://github.com/vaynealtapascine/SoundOff#readme">README</a> names them.</p>
+      <p><a href="/">dev.vayne.garden</a> · <a href="https://vayne.garden">vayne.garden</a></p>
+    </div>
+  </footer>
+</body>
+</html>
