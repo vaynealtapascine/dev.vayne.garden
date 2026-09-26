@@ -1,0 +1,84 @@
+# Builds the site (pages + fresh builds of dScribe, eo3 and Disclosure Studio) and uploads it to Neocities.
+#
+# - push to main:      deploy to dev.vayne.garden
+# - hourly schedule:   deploy to dev.vayne.garden only if a hosted app's main moved since the last deploy
+#                      (compares against the build.json the last deploy published)
+# - manual run:        pick dev or test, and optionally other refs for the hosted apps
+#
+# Secrets: NEOCITIES_DEV_API_TOKEN (dev.vayne.garden), NEOCITIES_TEST_API_TOKEN (test.vayne.garden).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Which Neocities site
+        type: choice
+        options: [dev, test]
+        default: dev
+      dscribe_ref:
+        description: dScribe branch or tag
+        default: main
+      eo3_ref:
+        description: eo3 branch or tag
+        default: main
+      disclosure_ref:
+        description: Disclosure Studio branch or tag
+        default: main
+
+concurrency:
+  group: deploy-${{ inputs.target || 'dev' }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TARGET: ${{ inputs.target || 'dev' }}
+      DSCRIBE_REF: ${{ inputs.dscribe_ref || 'main' }}
+      EO3_REF: ${{ inputs.eo3_ref || 'main' }}
+      DISCLOSURE_REF: ${{ inputs.disclosure_ref || 'main' }}
+    steps:
+      - name: Anything new upstream?
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then echo "go=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          live=$(curl -fsSL "https://dev.vayne.garden/build.json?t=$(date +%s)" || echo '{}')
+          go=false
+          for app in dscribe:dScribe eo3:eo3 disclosure:DisclosureStudio; do
+            key=${app%%:*}; repo=${app#*:}
+            head=$(git ls-remote "https://github.com/vaynealtapascine/$repo.git" refs/heads/main | cut -f1)
+            deployed=$(echo "$live" | jq -r ".apps.$key.commit // \"\"")
+            echo "$repo main $head, live ${deployed:-none}"
+            [ "$head" = "$deployed" ] || go=true
+          done
+          echo "go=$go" >> "$GITHUB_OUTPUT"
+
+      - if: steps.check.outputs.go == 'true'
+        uses: actions/checkout@v4
+
+      - if: steps.check.outputs.go == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - if: steps.check.outputs.go == 'true'
+        name: Build
+        run: node scripts/build.mjs
+
+      - if: steps.check.outputs.go == 'true'
+        name: Upload to Neocities
+        uses: bcomnes/deploy-to-neocities@v3
+        with:
+          api_key: ${{ env.TARGET == 'test' && secrets.NEOCITIES_TEST_API_TOKEN || secrets.NEOCITIES_DEV_API_TOKEN }}
+          dist_dir: out
+          cleanup: true
+          neocities_supporter: true
+          preview_before_deploy: true
