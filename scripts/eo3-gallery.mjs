@@ -18,7 +18,7 @@ export function buildEo3Gallery(examplesDir, out) {
   <iframe src="/eo3/about/examples/${id}-preview.html" title="${title} example preview" sandbox="allow-same-origin" loading="lazy" data-example-preview></iframe>
   <div class="eo3-example-info"><h3>${title}</h3><p>${escape(item.description)}</p>
     <div class="eo3-example-links"><a class="eo3-open-example" href="/eo3/?example=${file}">Open in EO3 ↗</a><a href="/eo3/about/examples/${file}" download>Document ↓</a><a href="/eo3/about/examples/${id}-preview.html" target="_blank" rel="noopener">Full preview ↗</a></div>
-    <details class="eo3-example-tip"><summary>Make it your own</summary><p>${escape(item.tip)}</p><p><a href="/eo3/about/examples/${id}.html" download>Chapter HTML ↓</a> · <a href="/eo3/about/examples/${id}.css" download>Workskin CSS ↓</a></p></details>
+    <details class="eo3-example-tip"><summary>Editing tips &amp; files</summary><p>${escape(item.tip)}</p><p><a href="/eo3/about/examples/${id}.html" download>Chapter HTML ↓</a> · <a href="/eo3/about/examples/${id}.css" download>Workskin CSS ↓</a></p></details>
   </div>
 </article>`;
   }).join('\n');
