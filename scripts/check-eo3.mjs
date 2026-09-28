@@ -58,7 +58,7 @@ try {
     await previewPage.setViewportSize({ width: 320, height: 800 });
     await previewPage.goto(`${origin}/eo3/about/examples/${item.id}-preview.html`);
     assert.equal(await previewPage.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${item.title} preview overflow`);
-    for (const extension of ['html', 'css']) {
+    for (const extension of ['html', 'css', 'txt', 'eo3group.json']) {
       const response = await page.request.get(`${origin}/eo3/about/examples/${item.id}.${extension}`);
       assert.equal(response.status(), 200);
       assert.ok((await response.text()).length > 100);
@@ -78,14 +78,63 @@ try {
     editor.on('pageerror', (error) => errors.push(`${item.title}: ${error.message}`));
     await editor.goto(`${origin}/eo3/?example=${item.file}`);
     await editor.locator('#workskin').waitFor({ timeout: 20000 });
+    await editor.locator('#workskin .fic-' + ({ 'text-messages': 'message', 'group-chat': 'group', email: 'email', letter: 'letter', journal: 'journal', newspaper: 'news', 'case-file': 'case', 'social-thread': 'feed', transcript: 'transcript', terminal: 'terminal', poetry: 'verse', 'chapter-opening': 'chapter', footnotes: 'notes', 'collapsible-notes': 'extras' }[item.id])).first().waitFor({ timeout: 20000 });
     assert.ok((await editor.locator('#workskin').innerText()).includes('Lorem ipsum'));
     assert.ok((await editor.locator('.application-tabs').innerText()).includes(item.title.replace(' & ', ' and ')) || (await editor.locator('.application-tabs').innerText()).includes(item.title));
     assert.equal(await editor.locator('.is-error').count(), 0);
+    assert.equal(await editor.locator('.module-item').count(), 6);
+    assert.equal(await editor.locator('.module-item.is-collapsed').count(), 4);
+    assert.equal(await editor.locator('.module-item').first().locator('.cm-content').isVisible(), true);
+    if (item.id === 'text-messages') {
+      const input = editor.locator('.module-item').first().locator('.cm-content');
+      await input.click();
+      await editor.keyboard.press('Control+A');
+      await editor.keyboard.insertText('Ada: Lorem ipsum.\nBo: **Dolor sit amet.**\n! End');
+      await editor.locator('#workskin .fic-message strong').waitFor();
+      assert.equal(await editor.locator('#workskin .fic-message strong').innerText(), 'Dolor sit amet.');
+      assert.equal(await editor.locator('#workskin .fic-message-in').count(), 1);
+      assert.equal(await editor.locator('#workskin .fic-message-out').count(), 1);
+    }
     await editorContext.close();
   }
   const bundle = await page.request.get(`${origin}/eo3/about/examples/eo3-workskin-examples.zip`);
   assert.equal(bundle.status(), 200);
   assert.equal((await bundle.body()).readUInt32LE(0), 0x04034b50);
+  const lab = await context.newPage();
+  lab.on('pageerror', (error) => errors.push(`Writing preview: ${error.message}`));
+  await lab.goto(`${origin}/eo3/about/examples/writing-lab.html`);
+  for (const item of catalog) {
+    await lab.locator('select').selectOption(item.id);
+    assert.ok((await lab.locator('#workskin').innerText()).includes('Lorem ipsum'));
+    await lab.getByRole('button', { name: 'Workskin on', exact: true }).click();
+    assert.equal(await lab.locator('#creator-style').evaluate((style) => style.sheet.disabled), true);
+    await lab.getByRole('button', { name: 'Workskin off', exact: true }).click();
+  }
+  await lab.locator('select').selectOption('text-messages');
+  await lab.locator('#writing-input').fill('Ada: Lorem ipsum.\nBo: **Dolor sit amet.**\n! End');
+  assert.equal(await lab.locator('#workskin strong').innerText(), 'Dolor sit amet.');
+  for (const width of [320, 390, 768, 1440]) {
+    await lab.setViewportSize({ width, height: 900 });
+    assert.equal(await lab.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Writing preview overflow at ${width}px`);
+  }
+  const groupContext = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+  const groupEditor = await groupContext.newPage();
+  groupEditor.on('pageerror', (error) => errors.push(`Imported group: ${error.message}`));
+  await groupEditor.goto(`${origin}/eo3/?example=ao3-letter.toml`);
+  await groupEditor.locator('#workskin .fic-letter').waitFor({ timeout: 20000 });
+  await groupEditor.getByRole('button', { name: 'add node', exact: true }).click();
+  await groupEditor.getByRole('button', { name: 'Show Groups', exact: true }).click();
+  await groupEditor.getByRole('button', { name: 'Select AO3 · Text messages', exact: true }).click();
+  assert.equal(await groupEditor.locator('.module-item').count(), 12);
+  assert.equal(await groupEditor.locator('.module-item').nth(6).locator('.cm-content').isVisible(), true);
+  const importedCompose = groupEditor.locator('.module-item').nth(8);
+  await importedCompose.getByRole('button', { name: 'show contents', exact: true }).click();
+  await importedCompose.getByRole('group', { name: 'Connections', exact: true }).locator('select').first().selectOption('output');
+  await groupEditor.locator('.module-item').nth(7).getByRole('group', { name: 'Connections', exact: true }).locator('select').first().selectOption('output');
+  await groupEditor.locator('#workskin .fic-message').waitFor({ timeout: 20000 });
+  assert.equal(await groupEditor.locator('#workskin .fic-message').evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(248, 250, 249)');
+  assert.equal(await groupEditor.locator('.is-error').count(), 0);
+  await groupContext.close();
   await context.close();
 
   const noScript = await browser.newContext({ javaScriptEnabled: false });
@@ -95,7 +144,7 @@ try {
   assert.equal(await staticPage.locator('.eo3-open-example').first().isVisible(), true);
   await noScript.close();
   assert.deepEqual(errors, []);
-  console.log(`Passed: ${catalog.length} editor links, previews, downloads, filters, skin comparison, keyboard disclosures, footnotes, mobile widths, dark theme, and no-script content.`);
+  console.log(`Passed: ${catalog.length} editor links, live writing inputs, reusable group import and connections, previews, downloads, filters, skin comparison, keyboard disclosures, footnotes, mobile widths, dark theme, and no-script content.`);
 } finally {
   await browser.close();
 }

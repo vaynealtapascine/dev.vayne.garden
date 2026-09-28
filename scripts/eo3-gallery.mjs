@@ -14,11 +14,12 @@ export function buildEo3Gallery(examplesDir, out) {
   const cards = catalog.map((item, index) => {
     const id = escape(item.id), title = escape(item.title), file = escape(item.file);
     return `<article class="eo3-example" data-category="${escape(item.category)}">
-  <div class="eo3-example-top"><span>${String(index + 1).padStart(2, '0')} / ${escape(item.category)}</span><span>HTML + workskin</span></div>
+  <div class="eo3-example-top"><span>${String(index + 1).padStart(2, '0')} / ${escape(item.category)}</span><span>Plain text → workskin</span></div>
   <iframe src="/eo3/about/examples/${id}-preview.html" title="${title} example preview" sandbox="allow-same-origin" loading="lazy" data-example-preview></iframe>
-  <div class="eo3-example-info"><h3>${title}</h3><p>${escape(item.description)}</p>
+  <div class="eo3-example-info"><h3>${title}</h3><p>${escape(item.description)}</p><p class="eo3-writing-syntax"><code>${escape(item.syntax)}</code></p>
     <div class="eo3-example-links"><a class="eo3-open-example" href="/eo3/?example=${file}">Open in EO3 ↗</a><a href="/eo3/about/examples/${file}" download>Document ↓</a><a href="/eo3/about/examples/${id}-preview.html" target="_blank" rel="noopener">Full preview ↗</a></div>
-    <details class="eo3-example-tip"><summary>Editing tips &amp; files</summary><p>${escape(item.tip)}</p><p><a href="/eo3/about/examples/${id}.html" download>Chapter HTML ↓</a> · <a href="/eo3/about/examples/${id}.css" download>Workskin CSS ↓</a></p></details>
+    <details class="eo3-writing-guide"><summary>What you type</summary><p>${escape(item.writingGuide)}</p><pre><code>${escape(item.writing)}</code></pre><p><a href="/eo3/about/examples/writing-lab.html?example=${id}" target="_blank" rel="noopener">Try writing this example ↗</a></p></details>
+    <details class="eo3-example-tip"><summary>Reuse &amp; download</summary><p>${escape(item.tip)}</p><p><a href="/eo3/about/examples/${id}.eo3group.json" download>Reusable group ↓</a> · <a href="/eo3/about/examples/${id}.txt" download>Writing input ↓</a><br><a href="/eo3/about/examples/${id}.html" download>Chapter HTML ↓</a> · <a href="/eo3/about/examples/${id}.css" download>Workskin CSS ↓</a></p></details>
   </div>
 </article>`;
   }).join('\n');

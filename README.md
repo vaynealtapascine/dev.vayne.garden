@@ -16,7 +16,7 @@ Live at <https://dev.vayne.garden>.
 | `/eo3/about` | EO3 landing page, 14 live workskin examples, and an offline example bundle |
 | `/build.json` | Which commit of each app is live |
 
-The pages are hand-written HTML and stylesheets in `site/`. There's no framework. The EO3 about page uses a small script for gallery filters and a workskin on/off comparison; its content and downloads also work without JavaScript.
+The pages are hand-written HTML and stylesheets in `site/`. The EO3 about page uses a small script for gallery filters and a workskin on/off comparison; its gallery and downloads also work without JavaScript. Its interactive writing preview is built by EO3 from the same reusable Svelte components as the editor examples. Each example has a writing guide, an editable document, an importable group, plain-text input, and matching HTML and CSS downloads.
 
 ## Build
 

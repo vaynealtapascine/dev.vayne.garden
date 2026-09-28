@@ -143,3 +143,11 @@
   .eo3-step-number { color: #b4c9a5; }
   .eo3-process-note { border-color: #4c5943; }
 }
+.eo3-writing { padding-bottom: 55px; }
+.eo3-writing-lab { width: 100%; height: 595px; border: 1px solid var(--eo3-line); border-radius: 8px; background: #f7f5ed; margin: 12px 0; }
+.eo3-writing-syntax { min-height: 0 !important; font-size: 11px; padding: 10px 12px; background: var(--eo3-paper); border: 1px solid var(--eo3-line); border-radius: 4px; }
+.eo3-writing-syntax code { white-space: normal; overflow-wrap: anywhere; }
+.eo3-writing-guide { margin-top: 18px; font-size: 12px; color: var(--eo3-muted); }
+.eo3-writing-guide summary { cursor: pointer; color: var(--eo3-ink); font-weight: bold; }
+.eo3-writing-guide pre { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--eo3-paper); padding: 14px; border: 1px solid var(--eo3-line); border-radius: 4px; font-size: 11px; line-height: 1.7; }
+@media (max-width: 620px) { .eo3-writing-lab { height: 840px; } }
