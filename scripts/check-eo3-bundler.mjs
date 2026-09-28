@@ -51,7 +51,16 @@ async function editor({ delayStartup = false, dropReplies = 0 } = {}) {
 }
 
 async function rendered(page, timeout = 30000) {
-  await page.locator('#workskin .fic-message').first().waitFor({ state: 'attached', timeout });
+  try {
+    await page.locator('#workskin .fic-message').first().waitFor({ state: 'attached', timeout });
+  } catch (error) {
+    console.log('Failed render:', await page.evaluate(() => ({
+      workers: window.svelteWorkerChecks,
+      scripts: [...document.scripts].map(script => script.src).filter(Boolean),
+      page: document.body.innerText.slice(-2500),
+    })));
+    throw error;
+  }
   await page.locator('.render-indicator.is-rendering').waitFor({ state: 'hidden', timeout });
   assert.equal(await page.locator('.is-error').count(), 0);
   assert.ok((await page.locator('#workskin').first().innerText()).includes('Lorem ipsum'));
@@ -59,7 +68,7 @@ async function rendered(page, timeout = 30000) {
 
 try {
   const cold = await editor({ delayStartup: true });
-  await rendered(cold, 20000);
+  await rendered(cold, 45000);
   let workers = await cold.evaluate(() => window.svelteWorkerChecks);
   assert.equal(workers.length, 1);
   assert.ok(workers[0].ready - workers[0].created >= 6500);

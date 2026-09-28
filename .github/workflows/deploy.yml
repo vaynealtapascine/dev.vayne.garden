@@ -92,3 +92,9 @@ jobs:
           cleanup: true
           neocities_supporter: true
           preview_before_deploy: true
+
+      - if: steps.check.outputs.go == 'true'
+        name: Verify EO3 entry page
+        env:
+          NEOCITIES_API_KEY: ${{ env.TARGET == 'test' && secrets.NEOCITIES_TEST_API_TOKEN || secrets.NEOCITIES_DEV_API_TOKEN }}
+        run: node scripts/verify-eo3-deploy.mjs "https://${{ env.TARGET == 'test' && 'test' || 'dev' }}.vayne.garden"
