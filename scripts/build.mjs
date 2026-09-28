@@ -8,11 +8,13 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { buildEo3Gallery } from './eo3-gallery.mjs';
 
 const root = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'out');
 const work = path.join(root, '.work');
 const withApps = !process.argv.includes('--no-apps');
+let eo3ExamplesDir = process.env.EO3_EXAMPLES_DIR || path.join(work, 'eo3/dist/workskin-examples');
 
 const apps = [
   {
@@ -93,9 +95,11 @@ if (withApps) {
     app.prune?.(dist);
     addBacklink(dist);
     fs.cpSync(dist, path.join(out, app.name), { recursive: true });
+    if (app.name === 'eo3') eo3ExamplesDir = path.join(dist, 'workskin-examples');
     manifest.apps[app.name] = { repo: app.repo.startsWith('http') ? app.repo : 'local', ref: app.ref, commit };
   }
 }
 
+buildEo3Gallery(eo3ExamplesDir, out);
 fs.writeFileSync(path.join(out, 'build.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log(`\nbuilt ${path.relative(root, out)}/`, JSON.stringify(manifest.apps));

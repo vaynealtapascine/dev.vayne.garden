@@ -13,9 +13,10 @@ Live at <https://dev.vayne.garden>.
 | `/` | The tools and the things we made before them |
 | `/drycut/`, `/soundoff/`, `/arbor/` | Short landing pages for the desktop and self-hosted tools |
 | `/dscribe/`, `/eo3/`, `/disclosure/` | Live builds of [dScribe](https://github.com/vaynealtapascine/dScribe), [eo3](https://github.com/vaynealtapascine/eo3) and [Disclosure Studio](https://github.com/vaynealtapascine/DisclosureStudio), rebuilt from each repo's `main` |
+| `/eo3/about` | EO3 landing page, 14 live workskin examples, and an offline example bundle |
 | `/build.json` | Which commit of each app is live |
 
-The pages are hand-written HTML and one stylesheet in `site/`. There's no framework and no client-side script.
+The pages are hand-written HTML and stylesheets in `site/`. There's no framework. The EO3 about page uses a small script for gallery filters and a workskin on/off comparison; its content and downloads also work without JavaScript.
 
 ## Build
 
@@ -27,6 +28,8 @@ node scripts/serve.mjs out 5270   # look at it on http://127.0.0.1:5270
 ```
 
 `build.mjs` clones each app at a ref, runs its own `npm ci` and `npm run build`, copies `dist/` under the site, and adds a small "← dev.vayne.garden" link to the app's page. Point it at another branch, or a local checkout, with `DSCRIBE_REPO`/`DSCRIBE_REF`, `EO3_REPO`/`EO3_REF` and `DISCLOSURE_REPO`/`DISCLOSURE_REF`.
+
+EO3's build exports its canonical example documents into `dist/workskin-examples`. The site generates the about-page gallery and downloads from that directory. With `--no-apps`, it reuses `.work/eo3/dist/workskin-examples`; set `EO3_EXAMPLES_DIR` to another EO3 checkout's export directory for local authoring. Run a full build once if those exports are missing. Old EO3 refs without the example exports cannot build the new about page.
 
 ## Deploy
 
