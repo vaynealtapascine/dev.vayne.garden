@@ -4,6 +4,25 @@ const count = document.getElementById('example-count');
 const toggle = document.getElementById('skin-toggle');
 let skinsVisible = true;
 
+// Fit the writing demo to its content so only the editor and preview panes
+// scroll. Watch layout changes from format selection, wrapping, and resizing.
+const writingLab = document.querySelector('.eo3-writing-lab');
+let writingLabObserver;
+function fitWritingLab() {
+  writingLabObserver?.disconnect();
+  const body = writingLab.contentDocument?.body;
+  if (!body) return;
+  const resize = () => {
+    const borders = writingLab.offsetHeight - writingLab.clientHeight;
+    writingLab.style.height = `${Math.ceil(body.getBoundingClientRect().height) + borders}px`;
+  };
+  writingLabObserver = new ResizeObserver(resize);
+  writingLabObserver.observe(body);
+  resize();
+}
+writingLab.addEventListener('load', fitWritingLab);
+fitWritingLab();
+
 // Previews contain only bundled HTML/CSS. Same-origin access lets us disable the
 // actual stylesheet without reloading the reader's scroll position or open notes.
 function applySkin(frame) {
