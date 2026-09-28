@@ -6,18 +6,19 @@
   <title>EO3 — Workskin editor for AO3 fics</title>
   <meta name="description" content="An editor for AO3 fics. Explore 14 editable workskin examples for messages, letters, found documents, and typography. Preview, adapt, and export with EO3.">
   <link rel="canonical" href="https://dev.vayne.garden/eo3/about">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/eo3/about/brand/eo3.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/eo3/about/about.css?v=modular-writing-1">
+  <link rel="stylesheet" href="/eo3/about/about.css?v=archive-editor-1">
   <script src="/eo3/about/about.js" defer></script>
 </head>
 <body class="eo3-about">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="eo3-header">
     <div class="eo3-wrap eo3-nav">
-      <a class="eo3-wordmark" href="/eo3/about" aria-label="EO3 home">eo3<span>editor of our own</span></a>
-      <nav aria-label="Main navigation"><a href="#examples">Examples</a><a href="#how">How it works</a><a class="eo3-nav-open" href="/eo3/">Open editor <span aria-hidden="true">↗</span></a></nav>
+      <a class="eo3-wordmark" href="/eo3/about" aria-label="EO3 home"><img src="/eo3/about/brand/eo3.svg" width="70" height="70" alt=""><span class="eo3-brand-name"><strong>Editor of Our Own</strong><span>HTML &amp; workskins for AO3</span></span></a>
+      <a class="eo3-header-home" href="/">dev.vayne.garden</a>
     </div>
+    <div class="eo3-nav-ribbon"><nav class="eo3-wrap" aria-label="Main navigation"><a href="#examples">Examples</a><a href="#how">How it works</a><a href="#faq-title">Help</a><a class="eo3-nav-open" href="/eo3/">Open EO3 <span aria-hidden="true">↗</span></a></nav></div>
   </header>
   <main id="main">
     <section class="eo3-wrap eo3-hero" aria-labelledby="hero-title">
@@ -30,9 +31,17 @@
         <p class="eo3-small">Free &amp; open source. Runs in your browser.</p>
       </div>
       <figure class="eo3-hero-example">
-        <div class="eo3-preview-label"><span>From the example collection</span><span>04 / Letter</span></div>
+        <div class="eo3-window-bar"><span>EO3 <span aria-hidden="true">/</span> Letter</span><span>Local document</span></div>
+        <div class="eo3-window-tabs" aria-hidden="true"><span>Writing</span><span>Workskin</span><span>AO3 preview</span></div>
+        <div class="eo3-node-canvas" role="img" aria-label="The writing input connects to a reusable Letter component. Its HTML and a separate workskin stylesheet feed the AO3 preview below.">
+          <div class="eo3-demo-node eo3-demo-writing"><strong><span>1</span> Write here</strong><code>Dear Person B,<br>Lorem ipsum…</code></div>
+          <div class="eo3-demo-node eo3-demo-style"><strong><span>2</span> Workskin</strong><code>colors &amp; spacing</code></div>
+          <svg class="eo3-node-wires" viewBox="0 0 42 150" preserveAspectRatio="none" aria-hidden="true"><path d="M0 37.5 C25 37.5 17 75 42 75 M0 120.5 H21 V172"/></svg>
+          <div class="eo3-demo-node eo3-demo-renderer"><strong><span>3</span> Letter</strong><span>Reusable renderer</span><code>Letter.svelte</code><small>HTML <span aria-hidden="true">↘</span></small></div>
+        </div>
+        <div class="eo3-preview-label"><span>AO3 preview</span><span>Creator’s style on</span></div>
         <iframe src="/eo3/about/examples/letter-preview.html" title="A personal letter example with warm paper, a dateline, and a signature" sandbox="allow-same-origin" data-example-preview></iframe>
-        <figcaption>A letter with a dateline and signature.<br><a href="/eo3/?example=ao3-letter.toml">Open the letter in EO3 <span aria-hidden="true">↗</span></a></figcaption>
+        <figcaption><span>04 / Letter</span><a href="/eo3/?example=ao3-letter.toml">Open this example <span aria-hidden="true">↗</span></a></figcaption>
       </figure>
     </section>
 
@@ -46,7 +55,7 @@
     <section class="eo3-wrap eo3-writing" aria-labelledby="writing-title">
       <p class="eo3-eyebrow">Write first, reuse the format</p><h2 id="writing-title">Type the conversation.</h2>
       <p class="eo3-section-intro">Type <code>NAME: text</code> and a Svelte component turns it into a chat log. Add a time, quoted reply, or reaction when the scene needs it. Try the other formats in the menu, too.</p>
-      <iframe class="eo3-writing-lab" src="/eo3/about/examples/writing-lab.html" title="Try the plain-text writing examples with a live preview" loading="lazy"></iframe>
+      <iframe class="eo3-writing-lab" src="/eo3/about/examples/writing-lab.html?v=archive-editor-1" title="Try the plain-text writing examples with a live preview" loading="lazy"></iframe>
       <p class="eo3-gallery-hint">In EO3, your writing, the reusable component, and the workskin are separate modules. Use the same component for another conversation or document, with its own text input.</p>
     </section>
 
