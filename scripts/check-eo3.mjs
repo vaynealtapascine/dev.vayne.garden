@@ -10,6 +10,41 @@ const executablePath = process.env.CHROME || 'C:/Users/pcuser/AppData/Local/ms-p
 const browser = await chromium.launch({ executablePath });
 const errors = [];
 
+async function checkGraph(page, title, expanded) {
+  // Node and viewport transitions last 300ms; inspect their settled visible bounds.
+  await page.waitForTimeout(500);
+  const nodes = await page.locator('.react-flow__node').evaluateAll(elements => elements.map(el => ({
+    id: el.getAttribute('data-id'),
+    type: el.className,
+    label: el.innerText,
+    rect: el.getBoundingClientRect().toJSON(),
+  })));
+  const overlaps = (a, b) => a.left < b.right - 1 && a.right > b.left + 1 && a.top < b.bottom - 1 && a.bottom > b.top + 1;
+  const leaves = nodes.filter(node => !node.type.includes('node-groupFrame'));
+  for (let i = 0; i < leaves.length; i++) {
+    for (const other of leaves.slice(i + 1)) {
+      assert.equal(overlaps(leaves[i].rect, other.rect), false, `${title}: ${leaves[i].label} overlaps ${other.label}`);
+    }
+  }
+  const pane = await page.locator('.module-graph').boundingBox();
+  for (const node of nodes) {
+    assert.ok(node.rect.left >= pane.x - 1 && node.rect.right <= pane.x + pane.width + 1 && node.rect.top >= pane.y - 1 && node.rect.bottom <= pane.y + pane.height + 1, `${title}: ${node.label} is outside the graph view`);
+  }
+  const modules = leaves.filter(node => node.type.includes('node-module'));
+  const writer = modules[0].rect;
+  const stylesheet = modules[1].rect;
+  const renderer = nodes.find(node => node.type.includes(expanded ? 'node-groupFrame' : 'node-groupCard')).rect;
+  const output = nodes.find(node => node.type.includes('node-modOutput')).rect;
+  assert.ok(writer.right < renderer.left, `${title}: writer must be left of the renderer`);
+  assert.ok(renderer.right < output.left, `${title}: renderer must be left of the output and logo`);
+  assert.ok(stylesheet.top > renderer.bottom, `${title}: stylesheet must stay below the renderer`);
+  if (expanded) {
+    for (const node of leaves.filter(node => !modules.slice(2).includes(node))) {
+      assert.equal(overlaps(renderer, node.rect), false, `${title}: ${node.label} is inside the renderer frame`);
+    }
+  }
+}
+
 try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await context.newPage();
@@ -85,6 +120,11 @@ try {
     assert.equal(await editor.locator('.module-item').count(), 6);
     assert.equal(await editor.locator('.module-item.is-collapsed').count(), 4);
     assert.equal(await editor.locator('.module-item').first().locator('.cm-content').isVisible(), true);
+    await editor.locator('.react-flow__node-groupCard').waitFor();
+    await checkGraph(editor, item.title, false);
+    await editor.getByRole('button', { name: `Show the modules in ${item.title} · reusable renderer`, exact: true }).click();
+    await editor.locator('.react-flow__node-groupFrame').waitFor();
+    await checkGraph(editor, item.title, true);
     if (item.id === 'text-messages') {
       const input = editor.locator('.module-item').first().locator('.cm-content');
       await input.click();
@@ -144,7 +184,7 @@ try {
   assert.equal(await staticPage.locator('.eo3-open-example').first().isVisible(), true);
   await noScript.close();
   assert.deepEqual(errors, []);
-  console.log(`Passed: ${catalog.length} editor links, live writing inputs, reusable group import and connections, previews, downloads, filters, skin comparison, keyboard disclosures, footnotes, mobile widths, dark theme, and no-script content.`);
+  console.log(`Passed: ${catalog.length} editor links and clean collapsed/expanded node layouts, live writing inputs, reusable group import and connections, previews, downloads, filters, skin comparison, keyboard disclosures, footnotes, mobile widths, dark theme, and no-script content.`);
 } finally {
   await browser.close();
 }
