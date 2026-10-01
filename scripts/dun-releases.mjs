@@ -25,8 +25,8 @@ export function renderDunReleases(directory) {
   const primary = config.downloads[0];
   const primaryMeta = metadata(primary);
   const sections = {
-    PRIMARY: `<div class="actions"><a class="button" href="${safeUrl(primary.url)}">Download for ${escape(primary.platform)}</a><a href="#downloads">Other downloads &amp; releases</a></div>\n      <p class="release-meta">${primaryMeta}</p>`,
-    DOWNLOADS: `<ul class="downloads">${config.downloads.map(item => `<li><a href="${safeUrl(item.url)}">Download for ${escape(item.platform)}</a><span class="note">${metadata(item)}<br><a href="${safeUrl(item.releaseUrl)}">Release notes</a></span></li>`).join('')}</ul>${config.downloads.some(item => item.platform === 'Android') ? '' : '<p><strong>Android:</strong> no Android download is included in the currently listed release.</p>'}`,
+    PRIMARY: `<div class="actions">${config.downloads.map((item, index) => `<a class="button${index ? ' quiet' : ''}" href="${safeUrl(item.url)}">Download for ${escape(item.platform)}</a>`).join('')}</div>\n      <p class="release-meta">${primaryMeta}</p>\n      <a class="release-meta-link" href="#downloads">Download details &amp; release notes</a>`,
+    DOWNLOADS: `<ul class="downloads">${config.downloads.map(item => `<li><a class="button" href="${safeUrl(item.url)}">Download for ${escape(item.platform)}</a><span class="note">${metadata(item)}<br><a href="${safeUrl(item.releaseUrl)}">Release notes</a></span></li>`).join('')}</ul>${config.downloads.some(item => item.platform === 'Android') ? '' : '<p><strong>Android:</strong> no Android download is included in the currently listed release.</p>'}`,
     ALL: `<p><a href="${safeUrl(config.allReleasesUrl)}">Browse all releases on GitHub</a> for earlier versions and release notes. On a release page, open <strong>Assets</strong> to see its downloads.</p>`,
   };
   const file = path.join(directory, 'dun/index.html');
