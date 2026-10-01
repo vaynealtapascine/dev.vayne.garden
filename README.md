@@ -11,6 +11,7 @@ Live at <https://dev.vayne.garden>.
 | Path | What |
 |---|---|
 | `/` | The tools and the things we made before them |
+| `/dun/` | Dun reminders and timers, with installer downloads and release information |
 | `/drycut/`, `/soundoff/`, `/arbor/` | Short landing pages for the desktop and self-hosted tools |
 | `/dscribe/`, `/eo3/`, `/disclosure/` | Live builds of [dScribe](https://github.com/vaynealtapascine/dScribe), [eo3](https://github.com/vaynealtapascine/eo3) and [Disclosure Studio](https://github.com/vaynealtapascine/DisclosureStudio), rebuilt from each repo's `main` |
 | `/eo3/about` | EO3 landing page, 14 live workskin examples, and an offline example bundle |
@@ -32,6 +33,14 @@ node scripts/serve.mjs out 5270   # look at it on http://127.0.0.1:5270
 EO3's build exports its canonical example documents into `dist/workskin-examples`. The site generates the about-page gallery and downloads from that directory. With `--no-apps`, it reuses `.work/eo3/dist/workskin-examples`; set `EO3_EXAMPLES_DIR` to another EO3 checkout's export directory for local authoring. Run a full build once if those exports are missing. Old EO3 refs without the example exports cannot build the new about page.
 
 ## Deploy
+
+### Updating Dun downloads
+
+Edit `site/dun/releases.json`: the first entry in `downloads` is the primary download. Each entry contains its platform, architecture, version, publication date, size, file format, installer URL, and release-notes URL. Add an Android entry when a signed APK is published, or replace the Windows entry when its next installer is available. Only list published artifacts; keep older versions accessible through `allReleasesUrl`.
+
+Run `node scripts/dun-releases.mjs` to refresh the checked-in HTML, then commit both files. The normal build also renders this data into `out/dun/index.html`, so the deployed links and metadata always come from the config. Downloads work without JavaScript; the page never depends on a live GitHub API request.
+
+### Site deployment
 
 `.github/workflows/deploy.yml` builds and uploads `out/` with [deploy-to-neocities](https://github.com/bcomnes/deploy-to-neocities):
 

@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import { buildEo3Gallery } from './eo3-gallery.mjs';
+import { renderDunReleases } from './dun-releases.mjs';
 
 const root = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'out');
@@ -78,6 +79,7 @@ function removeWhere(dir, test) {
 
 fs.rmSync(out, { recursive: true, force: true });
 fs.cpSync(path.join(root, 'site'), out, { recursive: true });
+renderDunReleases(out);
 
 const manifest = { built: new Date().toISOString(), apps: {} };
 

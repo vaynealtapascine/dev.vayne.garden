@@ -1,0 +1,15 @@
+{
+  "allReleasesUrl": "https://github.com/vaynealtapascine/Dun/releases",
+  "downloads": [
+    {
+      "platform": "Windows",
+      "architecture": "64-bit PC",
+      "version": "0.3.0",
+      "published": "2026-09-28",
+      "size": "4.8 MB",
+      "format": ".exe installer",
+      "url": "https://github.com/vaynealtapascine/Dun/releases/download/v0.3.0/Dun_0.3.0_x64-setup.exe",
+      "releaseUrl": "https://github.com/vaynealtapascine/Dun/releases/tag/v0.3.0"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+/* Dun extends the site's warm paper, serif headings, and garden green. */
+.dun-hero { padding-top: 48px; }
+.dun-promise { font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.2; margin: 16px 0 22px; max-width: 24ch; }
+.release-meta, .release-status, .example-caption { color: var(--muted); font-size: .92rem; }
+.release-meta { margin: 10px 0 5px; font-variant-numeric: tabular-nums; }
+.release-status { margin-bottom: 0; }
+.dun-hero .button { padding: 12px 20px; }
+.example { margin-top: 36px; padding: 24px 0; border-block: 1px solid var(--line); }
+.example h2 { margin: 0 0 12px; }
+.example p { max-width: 68ch; }
+.example p:last-child { margin-bottom: 0; }
+.getting-started { padding-left: 24px; max-width: 70ch; }
+.getting-started li { padding-left: 5px; margin-bottom: 12px; }
+#downloads .aside { margin: 18px 0; }
+#downloads .downloads .note { max-width: 30em; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+::selection { background: var(--accent-soft); color: var(--ink); }
+.skip-link { position: absolute; top: 8px; left: 16px; padding: 8px 12px; background: var(--surface); transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+@media (max-width: 700px) {
+  .dun-hero { padding-top: 30px; }
+  .dun-hero .actions { align-items: flex-start; flex-direction: column; }
+  .site-head nav a { padding-block: 8px; }
+}
