@@ -1,6 +1,6 @@
 # Dun landing-page assets
 
-- timers.webp: captured on 2026-10-02 from Dun's local Svelte browser preview at 127.0.0.1:1420, using synthetic demonstration items (Eggs, Bread proof, Pomodoro). Captured at 1280×1024 and cropped to the 960×970 app area; encoded as WebP at quality 90. No personal reminder data is included.
+- timers.webp: recaptured on 2026-10-03 for v1.1.0 (the finished timer now counts up) from Dun's local Svelte browser preview at 127.0.0.1:1420, using synthetic demonstration items (Eggs, Bread proof, Pomodoro). Captured at 1280×1024 and cropped to the 960×970 app area; encoded as WebP at quality 90. No personal reminder data is included.
 - icon.svg: unmodified Dun app icon, copied from Dun/assets/app-icon.svg.
 - fonts/: unmodified Source Sans 3 fonts shared with the app. See fonts/ORIGIN.md and fonts/SourceSans3-OFL.md for upstream provenance and license.
 
