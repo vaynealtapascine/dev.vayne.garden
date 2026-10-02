@@ -8,6 +8,9 @@
   --ink: #162b37; --muted: #546873; --line: #cbd7df;
   --accent: #287d87; --link: #23737d; --accent-ink: #fff; --track: #d7e0e6;
   --alarm: #b83424;
+  /* The app's motion tokens: responsive starts, soft landings, nothing looping. */
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur-fast: 120ms; --dur: 200ms; --dur-slow: 280ms;
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
   background: var(--bg); color: var(--ink);
   scrollbar-color: var(--muted) var(--bg);
@@ -23,10 +26,12 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { margin: 0; background: var(--bg); color: var(--ink); font-size: 18px; line-height: 1.5; }
 .wrap { width: min(100% - 40px, 1200px); margin-inline: auto; }
 a { color: var(--link); text-underline-offset: .18em; text-decoration-thickness: 1px; }
-a:hover { text-decoration-thickness: 2px; }
+a { transition: color var(--dur-fast) ease-out, text-decoration-color var(--dur-fast) ease-out; }
+@media (hover: hover) { a:hover { text-decoration-thickness: 2px; } }
 a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 3px; }
 ::selection { background: var(--accent); color: var(--accent-ink); }
 p { margin: 0 0 1rem; }
@@ -40,15 +45,20 @@ h2 { font-size: clamp(2rem, 3.4vw, 2.8rem); letter-spacing: -.015em; }
 .brand img { display: block; }
 nav { display: flex; gap: 24px; }
 nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); text-decoration: none; }
-nav a:hover { color: var(--ink); text-decoration: underline; }
+@media (hover: hover) { nav a:hover { color: var(--ink); text-decoration: underline; } }
 .hero { display: grid; gap: 40px; padding-block: 48px; }
 .hero-copy { align-self: center; }
 .tagline { max-width: 44ch; color: var(--muted); font-size: 1.2rem; line-height: 1.5; margin-bottom: 28px; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.button { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 11px 18px; border-radius: 6px; font-size: 1.05rem; font-weight: 700; background: var(--accent); color: var(--accent-ink); text-decoration: none; }
-.button:hover { background: color-mix(in srgb, var(--accent) 86%, var(--ink)); }
+.button { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 11px 18px; border-radius: 6px; font-size: 1.05rem; font-weight: 700; background: var(--accent); color: var(--accent-ink); text-decoration: none; -webkit-tap-highlight-color: transparent; transition: background-color var(--dur-fast) ease-out, transform var(--dur-fast) var(--ease-out); }
 .button.quiet { background: var(--sunken); color: var(--ink); }
-.button.quiet:hover { background: color-mix(in srgb, var(--sunken) 86%, var(--accent)); }
+@media (hover: hover) {
+  .button:hover { background: color-mix(in srgb, var(--accent) 86%, var(--ink)); }
+  .button.quiet:hover { background: color-mix(in srgb, var(--sunken) 86%, var(--accent)); }
+}
+/* A press answers at once, as in the app. */
+.button:active { transform: scale(0.97); transition-duration: 60ms; }
+.button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .release-meta, .release-status, .example-caption { color: var(--muted); font-size: .95rem; }
 .release-meta { margin: 12px 0 8px; font-variant-numeric: tabular-nums; }
 .release-meta-link { display: inline-block; margin-bottom: 16px; }
@@ -60,15 +70,31 @@ nav a:hover { color: var(--ink); text-decoration: underline; }
 .example-layout { display: grid; gap: 32px; align-items: center; }
 .example p { max-width: 65ch; }
 .example p:last-child { margin-bottom: 0; }
-.timer-example { display: flex; align-items: center; gap: 24px; }
+.demo { display: grid; gap: 20px; }
+.demo-field { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--muted); font-size: 1.05rem; transition: border-color var(--dur-fast) ease-out; }
+.demo-typed { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.demo-typed:empty::before { content: 'Add… e.g. Tea in 4m'; color: var(--muted); }
+.demo-caret { display: none; width: 2px; height: 1.2em; margin-left: -8px; background: var(--accent); }
+.demo.typing .demo-field { border-color: var(--accent); }
+.demo.typing .demo-caret { display: block; }
+.demo.typing .demo-typed:empty::before { content: none; }
+.timer-example { display: flex; align-items: center; gap: 24px; transition: opacity var(--dur-slow) ease-out, transform var(--dur-slow) var(--ease-out); }
+/* While the example plays, the timer waits for its phrase to be added. */
+.demo.ready:not(.added) .timer-example { opacity: 0; transform: translateY(8px); }
 .timer-example strong { display: block; font-size: 1.75rem; line-height: 1.2; }
 .timer-state { display: block; color: var(--accent); font-weight: 700; margin: 8px 0; }
 .dial { position: relative; flex: none; display: grid; place-items: center; width: 156px; aspect-ratio: 1; }
 .dial svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .dial circle { fill: none; stroke-width: 7; }
 .track { stroke: var(--track); }
-.progress { stroke: var(--accent); stroke-linecap: round; }
-.dial span { font-size: 2.5rem; font-weight: 700; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -.025em; }
+.progress { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.6s var(--ease-out); }
+/* Running, the ring drains continuously between one-second ticks. */
+.ticking .progress { transition: stroke-dashoffset 1s linear; }
+@media (prefers-reduced-motion: reduce) {
+  .progress, .timer-example, .button, a { transition: none; }
+  .button:active { transform: none; }
+}
+.dial span { font-size: 2.5rem; min-width: 3.4ch; text-align: center; font-weight: 700; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -.025em; }
 .benefits, .start { padding: 60px 0; display: grid; gap: 28px; }
 .features { list-style: none; margin: 0; padding: 0; }
 .features li { padding-block: 20px; border-bottom: 1px solid var(--line); }
@@ -90,6 +116,9 @@ nav a:hover { color: var(--ink); text-decoration: underline; }
 .pairing-note { color: var(--muted); max-width: 74ch; }
 details { max-width: 74ch; margin: 24px 0; }
 summary { cursor: pointer; min-height: 44px; padding-block: 10px; color: var(--ink); font-weight: 600; }
+details[open] > p { animation: details-in var(--dur) var(--ease-out); }
+@keyframes details-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { details[open] > p { animation: none; } }
 details p { padding: 8px 0 0; color: var(--muted); }
 .site-foot { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: .95rem; }
 .site-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }

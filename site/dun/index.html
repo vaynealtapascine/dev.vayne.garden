@@ -9,7 +9,8 @@
   <link rel="canonical" href="https://dev.vayne.garden/dun/">
   <link rel="icon" href="/dun/icon.svg" type="image/svg+xml">
   <link rel="preload" href="/dun/fonts/SourceSans3-Bold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/dun/dun.css?v=1.0.0">
+  <link rel="stylesheet" href="/dun/dun.css?v=1.0.0-motion">
+  <script src="/dun/dun.js?v=1.0.0-motion" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -39,9 +40,12 @@
         <p>Type it into Dun and check the time it shows before adding it. When the timer ends, Dun reminds you. Busy? Snooze it. Finished? Tap <strong>Done</strong> and the nudges stop.</p>
         <p class="example-caption">You can also try “Pay rent tomorrow at 9” or “Stand up every 45 minutes.”</p>
       </div>
-      <div class="timer-example" role="img" aria-label="Illustrative Laundry timer with 32 minutes and 18 seconds remaining">
-        <div class="dial"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="track" cx="50" cy="50" r="44"/><circle class="progress" cx="50" cy="50" r="44" pathLength="100" stroke-dasharray="72 100" transform="rotate(-90 50 50)"/></svg><span>32:18</span></div>
-        <div><strong>Laundry</strong><span class="timer-state">Running</span><span class="example-caption">Illustrative countdown</span></div>
+      <div class="demo" data-demo>
+        <div class="demo-field" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="demo-typed">Laundry in 45 minutes</span><span class="demo-caret"></span></div>
+        <div class="timer-example" role="img" aria-label="Illustrative Laundry timer with 32 minutes and 18 seconds remaining">
+          <div class="dial"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="track" cx="50" cy="50" r="44"/><circle class="progress" cx="50" cy="50" r="44" pathLength="100" stroke-dasharray="100 100" stroke-dashoffset="28" transform="rotate(-90 50 50)"/></svg><span class="dial-value">32:18</span></div>
+          <div><strong>Laundry</strong><span class="timer-state">Running</span><span class="example-caption">Illustrative countdown</span></div>
+        </div>
       </div>
     </div></section>
     <section class="wrap benefits" aria-labelledby="benefits-title">
