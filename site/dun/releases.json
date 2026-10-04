@@ -4,22 +4,22 @@
     {
       "platform": "Windows",
       "architecture": "64-bit PC",
-      "version": "1.1.0",
-      "published": "2026-10-03",
+      "version": "1.2.0",
+      "published": "2026-10-04",
       "size": "5.5 MB",
       "format": ".exe installer",
-      "url": "https://github.com/vaynealtapascine/Dun/releases/download/v1.1.0/Dun_1.1.0_x64-setup.exe",
-      "releaseUrl": "https://github.com/vaynealtapascine/Dun/releases/tag/v1.1.0"
+      "url": "https://github.com/vaynealtapascine/Dun/releases/download/v1.2.0/Dun_1.2.0_x64-setup.exe",
+      "releaseUrl": "https://github.com/vaynealtapascine/Dun/releases/tag/v1.2.0"
     },
     {
       "platform": "Android",
       "architecture": "ARM64 · Android 7.0+",
-      "version": "1.1.0",
-      "published": "2026-10-03",
+      "version": "1.2.0",
+      "published": "2026-10-04",
       "size": "14.8 MB",
       "format": "signed APK",
-      "url": "https://github.com/vaynealtapascine/Dun/releases/download/v1.1.0/dun-1.1.0.apk",
-      "releaseUrl": "https://github.com/vaynealtapascine/Dun/releases/tag/v1.1.0"
+      "url": "https://github.com/vaynealtapascine/Dun/releases/download/v1.2.0/dun-1.2.0.apk",
+      "releaseUrl": "https://github.com/vaynealtapascine/Dun/releases/tag/v1.2.0"
     }
   ]
 }
