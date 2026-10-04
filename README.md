@@ -57,7 +57,7 @@ Every screenshot shows the real app doing real work. `scripts/shots/raw/` holds 
 - `capture-web.mjs <dscribe-url> <eo3-url> [disclosure-url]` drives the web apps with Playwright. dScribe downloads its model and describes the sample images on the CPU. The café menu is `raw/garden-cafe-menu.jpg`; the two photos are Windows' bundled wallpapers.
 - `capture-window.ps1` captures one desktop app's own window with `PrintWindow`, never the whole desktop. DryCut ran on `raw/still-life.jpg`, a small scene modelled in Blender for it. It's cropped to the work area so the capture leaves out its gallery. SoundOff opened a project made from a two-voice text-to-speech recording and transcribed by its own WhisperX worker, with settings redirected through `SOUNDOFF_SETTINGS_PATH`.
 - Arbor's shots come from the Arbor repo.
-- `frame.mjs` adds the tinted backdrop and shadow and writes webp. It needs ImageMagick.
+- `frame.mjs [name ...]` adds the tinted backdrop and shadow and writes webp, for every shot or just the ones named. It needs ImageMagick.
 
 ## License
 

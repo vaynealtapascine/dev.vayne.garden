@@ -1,6 +1,6 @@
 // Frames the raw screenshots in scripts/shots/raw/ for the site: a soft tinted backdrop, rounded corners and a
 // gentle shadow. Writes site/shots/<name>.webp. Needs ImageMagick (`magick`) on PATH for the webp step.
-//   node scripts/shots/frame.mjs
+//   node scripts/shots/frame.mjs [name ...]   (no names: every shot)
 import { chromium } from 'playwright-core';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -17,6 +17,7 @@ const shots = [
   { name: 'drycut', src: 'drycut.png', tint: '#f3e3c9', width: 900 },
   { name: 'soundoff', src: 'soundoff-light.png', tint: '#d7e5df', width: 900 },
   { name: 'soundoff-dark', src: 'soundoff-dark.png', tint: '#cfdcd6', width: 900 },
+  { name: 'soundoff-start', src: 'soundoff-start.png', tint: '#cfdcd6', width: 640 },
   { name: 'arbor', src: 'arbor-desktop.png', tint: '#dde8d0', width: 900 },
   { name: 'arbor-phone', src: 'arbor-phone.png', tint: '#dde8d0', width: 420, radius: 28 },
   { name: 'dscribe', src: 'dscribe-editor.png', tint: '#dde0f2', width: 900 },
@@ -41,7 +42,8 @@ fs.mkdirSync(outDir, { recursive: true });
 const browser = await chromium.launch({ executablePath });
 const context = await browser.newContext({ deviceScaleFactor: 2, viewport: { width: 1000, height: 1000 } });
 const tab = await context.newPage();
-for (const shot of shots) {
+const only = process.argv.slice(2);
+for (const shot of shots.filter((s) => only.length === 0 || only.includes(s.name))) {
   const html = path.join(here, 'raw', `.frame-${shot.name}.html`);
   fs.writeFileSync(html, page(shot));
   await tab.goto(url.pathToFileURL(html).href);
