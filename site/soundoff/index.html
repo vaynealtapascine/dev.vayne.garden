@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SoundOff · dev.vayne.garden</title>
-  <meta name="description" content="SoundOff: a local transcription editor for Windows. Transcribe on your computer with WhisperX and review word-synced text and speakers.">
+  <meta name="description" content="SoundOff: a local transcription editor. Record or import, transcribe on your computer with WhisperX, and review word-synced text and speakers at any speed.">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -19,10 +19,10 @@
   <main class="wrap">
     <section class="hero">
       <h1>SoundOff</h1>
-      <p class="tagline">A local transcription editor for Windows. Import or record audio and video, transcribe it on your computer, and review word-synced text and speakers. No account, no upload, no hosted inference.</p>
+      <p class="tagline">A local transcription editor. Record or import audio and video, transcribe it on your computer, and review word-synced text and speakers at whatever speed suits you. No account, no upload, no hosted inference.</p>
       <div class="actions">
-        <a class="button" href="https://github.com/vaynealtapascine/SoundOff/releases/download/v0.2.0/SoundOff-0.2.0-win-x64.zip">Download for Windows</a>
-        <a class="button quiet" href="#get">What you need</a>
+        <a class="button" href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-win-x64.zip">Download 1.0 for Windows</a>
+        <a class="button quiet" href="#get">Other platforms</a>
       </div>
     </section>
 
@@ -33,44 +33,46 @@
 
     <h2>What it does</h2>
     <ul class="features">
-      <li><strong>Import or record</strong><span>Bring in audio or video, or record a microphone, your computer's sound, or both at once.</span></li>
+      <li><strong>Import or record</strong><span>Bring in audio or video, or record a microphone, your computer's sound, or on Windows both at once.</span></li>
       <li><strong>Transcribe on your computer</strong><span>WhisperX runs in a private Python runtime: voice detection, recognition, then word-level alignment.</span></li>
       <li><strong>Review in sync</strong><span>Playback lights up the word being spoken; click any word to jump there. Video plays along.</span></li>
+      <li><strong>Listen at your pace</strong><span>Half speed to double, with the pitch kept, so a voice stays itself. Two keys step it up and down.</span></li>
       <li><strong>See who spoke when</strong><span>The waveform shows each paragraph as a band in its speaker's colour, with a time ruler. Double-click it to play from there.</span></li>
-      <li><strong>Correct everything</strong><span>Text, speakers, paragraphs and timing are yours to fix, and every save is a revision you can restore.</span></li>
+      <li><strong>Correct everything</strong><span>Text, speakers, paragraphs and timing are yours to fix. It saves as you pause, and every save is a revision you can restore.</span></li>
       <li><strong>Two views</strong><span>Read it as a document, or switch to a subtitle-style table of timed cues.</span></li>
-      <li><strong>Keep your hands on the keys</strong><span>Play, skip, step between paragraphs, mark a cue's start and end at the playhead, split, find and replace.</span></li>
       <li><strong>Export</strong><span>Text with or without timecodes, SRT subtitles, the clipboard, or a portable project bundle.</span></li>
     </ul>
 
-    <h2>New in 0.2.0</h2>
+    <h2>New in 1.0</h2>
     <div class="pair">
       <figure class="figure" style="margin-top: 0">
         <img src="/shots/soundoff-start.webp" width="1280" height="658" alt="SoundOff's start screen: two tiles side by side, 'Transcribe a file' with a Choose a file button, and 'Record' with the microphone choices and a Record button." loading="lazy">
         <figcaption>The start screen: bring a file, or record one right there.</figcaption>
       </figure>
       <ul class="features" style="grid-template-columns: 1fr">
-        <li><strong>Two ways in</strong><span>Transcribe a file or record, side by side. Drop a file anywhere on the window.</span></li>
-        <li><strong>The next step where you're looking</strong><span>A recording with no transcript offers Transcribe, and its progress, in the middle of the window.</span></li>
-        <li><strong>The transcript on the waveform</strong><span>Speaker-coloured bands, a ruler, and the time under the pointer.</span></li>
-        <li><strong>Recording you can't lose track of</strong><span>A red indicator in the top bar with the clock and Stop.</span></li>
+        <li><strong>Playback speed</strong><span>0.5× to 2× with the pitch kept. Timing stays in the recording's own time.</span></li>
+        <li><strong>Saves as you go</strong><span>A pause in typing saves a revision, without moving your cursor. Undo still steps back a burst at a time.</span></li>
+        <li><strong>One audio engine everywhere</strong><span>Playback and recording on Windows, macOS and Linux through the same code.</span></li>
+        <li><strong>Notes that say what happened</strong><span>Saved, Copied, Recording added: shown briefly, gone by themselves.</span></li>
       </ul>
     </div>
 
     <figure class="figure">
-      <img src="/shots/soundoff-dark.webp" width="1800" height="1174" alt="The same transcript in SoundOff's dark appearance." loading="lazy">
-      <figcaption>Dark is the default appearance.</figcaption>
+      <img src="/shots/soundoff-dark.webp" width="1800" height="1174" alt="The same transcript in SoundOff's dark appearance, playing at 1.25 times speed, shown on the speed button beside the clock." loading="lazy">
+      <figcaption>Dark is the default appearance. Here it is set to play at 1.25×; the button beside the clock is tinted whenever the speed is not as recorded.</figcaption>
     </figure>
 
-    <h2 id="get">What you need</h2>
+    <h2 id="get">Downloads and what you need</h2>
     <div class="aside">
-      <p><strong>SoundOff is an early preview (0.2.0).</strong> Windows is the only platform that has actually been run. The macOS and Linux downloads are built from the same source and can import, edit and export, but they can't play or record.</p>
-      <p>You'll also need <code>ffmpeg</code> and <code>ffprobe</code> on your PATH, and a one-time private Python runtime for transcription, set up with <code>python scripts/setup_runtime.py</code>. Model packs download only when you ask. The <a href="https://github.com/vaynealtapascine/SoundOff#readme">README</a> walks through it.</p>
+      <p><strong>Windows is the platform SoundOff has actually been run on</strong>, end to end on real hardware. The macOS and Linux downloads are the same app with playback and recording through the same audio engine, but nobody has launched them on a Mac or a Linux machine yet: treat them as something to try. On macOS the builds are unsigned and start from a terminal; on Linux, recording the computer's sound uses the sound server's monitor input.</p>
+      <p>Every build needs <code>ffmpeg</code> and <code>ffprobe</code> on your PATH, and a one-time private Python runtime for transcription, set up with <code>python scripts/setup_runtime.py</code>. Model packs download only when you ask. The <a href="https://github.com/vaynealtapascine/SoundOff#readme">README</a> walks through it.</p>
     </div>
     <ul class="downloads" style="margin-top: 1rem">
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v0.2.0/SoundOff-0.2.0-win-x64.zip">Windows x64</a><span class="note">ZIP, 74 MB</span></li>
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/tag/v0.2.0">macOS and Linux</a><span class="note">Untested builds, no playback or recording</span></li>
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases">Release notes and earlier versions</a><span class="note">GitHub</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-win-x64.zip">Windows x64</a><span class="note">ZIP, 75 MB</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-osx-arm64.zip">macOS, Apple silicon</a><span class="note">ZIP, 69 MB · not yet run on a Mac</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-osx-x64.zip">macOS, Intel</a><span class="note">ZIP, 72 MB · not yet run on a Mac</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-linux-x64.tar.gz">Linux x64</a><span class="note">tar.gz, 69 MB · not yet run on Linux</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/tag/v1.0.0">Release notes and earlier versions</a><span class="note">GitHub</span></li>
     </ul>
   </main>
 
