@@ -21,7 +21,7 @@
       <h1>SoundOff</h1>
       <p class="tagline">A local transcription editor. Record or import audio and video, transcribe it on your computer, and review word-synced text and speakers at whatever speed suits you. No account, no upload, no hosted inference.</p>
       <div class="actions">
-        <a class="button" href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-win-x64.zip">Download 1.0 for Windows</a>
+        <a class="button" href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.1.0/SoundOff-1.1.0-win-x64-setup.exe">Download 1.1 for Windows</a>
         <a class="button quiet" href="#get">Other platforms</a>
       </div>
     </section>
@@ -43,17 +43,17 @@
       <li><strong>Export</strong><span>Text with or without timecodes, SRT subtitles, the clipboard, or a portable project bundle.</span></li>
     </ul>
 
-    <h2>New in 1.0</h2>
+    <h2>New in 1.1</h2>
     <div class="pair">
       <figure class="figure" style="margin-top: 0">
         <img src="/shots/soundoff-start.webp" width="1280" height="658" alt="SoundOff's start screen: two tiles side by side, 'Transcribe a file' with a Choose a file button, and 'Record' with the microphone choices and a Record button." loading="lazy">
         <figcaption>The start screen: bring a file, or record one right there.</figcaption>
       </figure>
       <ul class="features" style="grid-template-columns: 1fr">
-        <li><strong>Playback speed</strong><span>0.5× to 2× with the pitch kept. Timing stays in the recording's own time.</span></li>
-        <li><strong>Saves as you go</strong><span>A pause in typing saves a revision, without moving your cursor. Undo still steps back a burst at a time.</span></li>
-        <li><strong>One audio engine everywhere</strong><span>Playback and recording on Windows, macOS and Linux through the same code.</span></li>
-        <li><strong>Notes that say what happened</strong><span>Saved, Copied, Recording added: shown briefly, gone by themselves.</span></li>
+        <li><strong>Installers</strong><span>A Windows installer with no administrator prompt, a Mac disk image, and a Debian/Ubuntu package.</span></li>
+        <li><strong>ffmpeg included</strong><span>The Windows installer brings its own. The Debian package installs it for you.</span></li>
+        <li><strong>Set up transcription from the app</strong><span>One button installs the speech engine in its own window. No Python, no terminal.</span></li>
+        <li><strong>Since 1.0</strong><span>Playback at 0.5× to 2× with the pitch kept, saving as you go, and one audio engine on every platform.</span></li>
       </ul>
     </div>
 
@@ -64,15 +64,16 @@
 
     <h2 id="get">Downloads and what you need</h2>
     <div class="aside">
-      <p><strong>Windows is the platform SoundOff has actually been run on</strong>, end to end on real hardware. The macOS and Linux downloads are the same app with playback and recording through the same audio engine, but nobody has launched them on a Mac or a Linux machine yet: treat them as something to try. On macOS the builds are unsigned and start from a terminal; on Linux, recording the computer's sound uses the sound server's monitor input.</p>
-      <p>Every build needs <code>ffmpeg</code> and <code>ffprobe</code> on your PATH, and a one-time private Python runtime for transcription, set up with <code>python scripts/setup_runtime.py</code>. Model packs download only when you ask. The <a href="https://github.com/vaynealtapascine/SoundOff#readme">README</a> walks through it.</p>
+      <p><strong>Windows is the platform SoundOff has actually been run on</strong>, end to end on real hardware. The macOS and Linux downloads are the same app, but nobody has opened them on a Mac or a Linux machine yet: treat them as something to try.</p>
+      <p>Transcription needs a one-time setup that downloads the speech engine, about 2 GB. The Windows installer offers it on its last page; otherwise press <strong>Set up transcription</strong> in the app. The speech models are another 2 GB, downloaded when you ask. None of the installers are signed, so Windows and macOS will warn you the first time. On a Mac, install ffmpeg with <code>brew install ffmpeg</code>. The <a href="https://github.com/vaynealtapascine/SoundOff#readme">README</a> walks through it.</p>
     </div>
     <ul class="downloads" style="margin-top: 1rem">
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-win-x64.zip">Windows x64</a><span class="note">ZIP, 75 MB</span></li>
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-osx-arm64.zip">macOS, Apple silicon</a><span class="note">ZIP, 69 MB · not yet run on a Mac</span></li>
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-osx-x64.zip">macOS, Intel</a><span class="note">ZIP, 72 MB · not yet run on a Mac</span></li>
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.0.0/SoundOff-1.0.0-linux-x64.tar.gz">Linux x64</a><span class="note">tar.gz, 69 MB · not yet run on Linux</span></li>
-      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/tag/v1.0.0">Release notes and earlier versions</a><span class="note">GitHub</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.1.0/SoundOff-1.1.0-win-x64-setup.exe">Windows x64</a><span class="note">Installer, 105 MB</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.1.0/SoundOff-1.1.0-osx-arm64.dmg">macOS, Apple silicon</a><span class="note">Disk image, 94 MB · not yet run on a Mac</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.1.0/SoundOff-1.1.0-osx-x64.dmg">macOS, Intel</a><span class="note">Disk image, 102 MB · not yet run on a Mac</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.1.0/SoundOff-1.1.0-linux-x64.deb">Linux x64, Debian and Ubuntu</a><span class="note">.deb, 69 MB · not yet run on Linux</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/download/v1.1.0/SoundOff-1.1.0-linux-x64.tar.gz">Linux x64, other distributions</a><span class="note">tar.gz, 88 MB · needs ffmpeg · not yet run on Linux</span></li>
+      <li><a href="https://github.com/vaynealtapascine/SoundOff/releases/tag/v1.1.0">Release notes and earlier versions</a><span class="note">GitHub</span></li>
     </ul>
   </main>
 
