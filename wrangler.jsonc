@@ -1,0 +1,17 @@
+// Static site on Cloudflare Workers (assets only, no Worker code).
+// `wrangler deploy` ships out/ to dev.vayne.garden; `wrangler deploy --env test` to test.vayne.garden.
+{
+  "name": "dev-vayne-garden",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "dev.vayne.garden", "custom_domain": true }],
+  "env": {
+    "test": {
+      "assets": { "directory": "./out", "not_found_handling": "404-page" },
+      "routes": [{ "pattern": "test.vayne.garden", "custom_domain": true }]
+    }
+  }
+}
