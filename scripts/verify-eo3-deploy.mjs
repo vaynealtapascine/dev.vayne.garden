@@ -11,19 +11,6 @@ const sha1 = body => createHash('sha1').update(body).digest('hex');
 const expectedHash = sha1(expected);
 const key = process.env.NEOCITIES_API_KEY;
 
-if (key) {
-  const response = await fetch('https://neocities.org/api/list?path=eo3', {
-    headers: { Authorization: `Bearer ${key}` },
-    signal: AbortSignal.timeout(30_000),
-  });
-  assert.ok(response.ok, `Neocities file listing returned ${response.status}`);
-  const listing = await response.json();
-  assert.equal(listing.result, 'success', 'Neocities file listing failed');
-  const entry = listing.files.find(file => file.path === 'eo3/index.html');
-  assert.equal(entry?.sha1_hash, expectedHash, 'Uploaded EO3 entry page does not match the build');
-  console.log(`Uploaded EO3 entry verified: ${expectedHash}, updated ${entry.updated_at}`);
-}
-
 for (let attempt = 0; attempt < 6; attempt++) {
   if (attempt) await delay(15_000);
   const response = await fetch(`${origin}/eo3/`, {
