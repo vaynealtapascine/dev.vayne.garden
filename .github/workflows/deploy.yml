@@ -62,14 +62,12 @@ jobs:
           echo "go=$go" >> "$GITHUB_OUTPUT"
 
       - if: steps.check.outputs.go == 'true'
-        name: Neocities key present?
-        env:
-          KEY: ${{ env.TARGET == 'test' && secrets.NEOCITIES_TEST_API_TOKEN || secrets.NEOCITIES_DEV_API_TOKEN }}
-        run: |
-          if [ -z "$KEY" ]; then
-            name=$([ "$TARGET" = test ] && echo NEOCITIES_TEST_API_TOKEN || echo NEOCITIES_DEV_API_TOKEN)
-            echo "::error::Add the $name repository secret (the $TARGET site's Neocities API key) to deploy."; exit 1
-          fi
+        name: Upload to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy out --project-name=${{ env.TARGET }}-vayne-garden --branch=main
 
       - if: steps.check.outputs.go == 'true'
         uses: actions/checkout@v4
