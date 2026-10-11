@@ -2,7 +2,7 @@
 
 # dev.vayne.garden
 
-A small, plain home for our local-first tools, with live copies of dScribe, eo3 and Disclosure Studio, deployed to Neocities.
+A small, plain home for our local-first tools, with live copies of dScribe, eo3 and Disclosure Studio, deployed to CloudFlare Pages.
 
 Live at <https://dev.vayne.garden>.
 
@@ -39,16 +39,6 @@ EO3's build exports its canonical example documents into `dist/workskin-examples
 Edit `site/dun/releases.json`: the first entry in `downloads` is the primary download. Each entry contains its platform, architecture, version, publication date, size, file format, installer URL, and release-notes URL. Add an Android entry when a signed APK is published, or replace the Windows entry when its next installer is available. Only list published artifacts; keep older versions accessible through `allReleasesUrl`.
 
 Run `node scripts/dun-releases.mjs` to refresh the checked-in HTML, then commit both files. The normal build also renders this data into `out/dun/index.html`, so the deployed links and metadata always come from the config. Downloads work without JavaScript; the page never depends on a live GitHub API request.
-
-### Site deployment
-
-`.github/workflows/deploy.yml` builds and uploads `out/` with [deploy-to-neocities](https://github.com/bcomnes/deploy-to-neocities):
-
-- **Push to `main`** deploys to dev.vayne.garden.
-- **Every hour** it compares each app's `main` with the live `build.json` and deploys only if one has moved, so app changes go live within the hour without any setup in the app repos.
-- **Run workflow** (Actions tab) deploys to `dev` or `test` (test.vayne.garden), optionally with other app refs.
-
-It needs the repository secrets `NEOCITIES_DEV_API_TOKEN` and, for test deploys, `NEOCITIES_TEST_API_TOKEN`: each site's API key from Neocities → Settings → API. The upload mirrors `out/` exactly, so anything else on that Neocities site is removed.
 
 ## Screenshots
 
