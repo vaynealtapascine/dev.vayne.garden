@@ -1,5 +1,5 @@
 // Tiny static server for looking at a build locally: `node scripts/serve.mjs [dir] [port]`.
-// Mirrors Neocities closely enough: `/foo/` serves `/foo/index.html`, unknown paths get not_found.html.
+// Mirrors the live site closely enough: `/foo/` serves `/foo/index.html`, unknown paths get 404.html.
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -39,7 +39,7 @@ http
   .createServer((req, res) => {
     const file = resolve(req.url);
     if (!file) {
-      const missing = path.join(root, 'not_found.html');
+      const missing = path.join(root, '404.html');
       res.writeHead(404, { 'content-type': types['.html'] });
       res.end(fs.existsSync(missing) ? fs.readFileSync(missing) : 'not found');
       return;

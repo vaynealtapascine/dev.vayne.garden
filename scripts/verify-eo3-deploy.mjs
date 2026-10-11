@@ -1,5 +1,5 @@
 // Check the published entry page as well as the upload: a stale CDN page can
-// reference deleted chunks even when Neocities reports a successful deployment.
+// reference deleted chunks even when the deploy itself reports success.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -9,7 +9,6 @@ const origin = process.argv[2] || 'https://dev.vayne.garden';
 const expected = await readFile('out/eo3/index.html');
 const sha1 = body => createHash('sha1').update(body).digest('hex');
 const expectedHash = sha1(expected);
-const key = process.env.NEOCITIES_API_KEY;
 
 for (let attempt = 0; attempt < 6; attempt++) {
   if (attempt) await delay(15_000);
@@ -22,6 +21,6 @@ for (let attempt = 0; attempt < 6; attempt++) {
     console.log(`Live EO3 entry verified at ${origin}/eo3/`);
     process.exit(0);
   }
-  console.log(`Live EO3 entry attempt ${attempt + 1}: HTTP ${response.status}, SHA-1 ${actualHash}, modified ${response.headers.get('last-modified')}, CDN ${response.headers.get('x-neocities-cdn')}, cache ${response.headers.get('x-cached')}`);
+  console.log(`Live EO3 entry attempt ${attempt + 1}: HTTP ${response.status}, SHA-1 ${actualHash}, modified ${response.headers.get('last-modified')}, cache ${response.headers.get('cf-cache-status')}`);
 }
-throw new Error('The uploaded EO3 entry is current, but the public entry page is still stale. Check the Neocities CDN cache before treating this deployment as live.');
+throw new Error('The uploaded EO3 entry is current, but the public entry page is still stale. Check the Cloudflare cache before treating this deployment as live.');

@@ -1,11 +1,11 @@
-# Builds the site (pages + fresh builds of dScribe, eo3 and Disclosure Studio) and uploads it to Neocities.
+# Builds the site (pages + fresh builds of dScribe, eo3 and Disclosure Studio) and deploys it to Cloudflare Workers.
 #
 # - push to main:      deploy to dev.vayne.garden
 # - hourly schedule:   deploy to dev.vayne.garden only if a hosted app's main moved since the last deploy
 #                      (compares against the build.json the last deploy published)
 # - manual run:        pick dev or test, and optionally other refs for the hosted apps
 #
-# Secrets: NEOCITIES_DEV_API_TOKEN (dev.vayne.garden), NEOCITIES_TEST_API_TOKEN (test.vayne.garden).
+# Secrets: CLOUDFLARE_API_TOKEN (Workers Scripts edit + vayne.garden Workers Routes/DNS edit), CLOUDFLARE_ACCOUNT_ID.
 name: Deploy
 
 on:
@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: Which Neocities site
+        description: Which site
         type: choice
         options: [dev, test]
         default: dev
@@ -62,14 +62,6 @@ jobs:
           echo "go=$go" >> "$GITHUB_OUTPUT"
 
       - if: steps.check.outputs.go == 'true'
-        name: Upload to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy out --project-name=${{ env.TARGET }}-vayne-garden --branch=main
-
-      - if: steps.check.outputs.go == 'true'
         uses: actions/checkout@v4
 
       - if: steps.check.outputs.go == 'true'
@@ -82,17 +74,13 @@ jobs:
         run: node scripts/build.mjs
 
       - if: steps.check.outputs.go == 'true'
-        name: Upload to Neocities
-        uses: bcomnes/deploy-to-neocities@v3
+        name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
         with:
-          api_key: ${{ env.TARGET == 'test' && secrets.NEOCITIES_TEST_API_TOKEN || secrets.NEOCITIES_DEV_API_TOKEN }}
-          dist_dir: out
-          cleanup: true
-          neocities_supporter: true
-          preview_before_deploy: true
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy ${{ env.TARGET == 'test' && '--env test' || '' }}
 
       - if: steps.check.outputs.go == 'true'
         name: Verify EO3 entry page
-        env:
-          NEOCITIES_API_KEY: ${{ env.TARGET == 'test' && secrets.NEOCITIES_TEST_API_TOKEN || secrets.NEOCITIES_DEV_API_TOKEN }}
         run: node scripts/verify-eo3-deploy.mjs "https://${{ env.TARGET == 'test' && 'test' || 'dev' }}.vayne.garden"
